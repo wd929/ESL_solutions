@@ -1,0 +1,173 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+%SetFonts
+
+%SetFonts
+
+
+
+\begin{document}
+\maketitle
+\section{5.9}
+%\subsection{}
+From the equation 5.14 in our textbook, we know that 
+\begin{eqnarray}
+\mathbf{S}_r &=& \mathbf{N} (\mathbf{N}^T\mathbf{N} + \lambda \Omega_N)^{-1}\mathbf{N}^{T} \\
+&=& \mathbf{N} ((\mathbf{N}^{T} )^{-1} \mathbf{N}^T\mathbf{N}+ \lambda (\mathbf{N}^{T} )^{-1} \Omega_N)^{-1}\\
+&=&   (\mathbf{N} \mathbf{N} ^{-1}+ \lambda (\mathbf{N}^{T} )^{-1} \Omega_N\mathbf{N} ^{-1})^{-1}\\
+&=&   (\mathbf{I} + \lambda (\mathbf{N}^{T} )^{-1} \Omega_N\mathbf{N} ^{-1})^{-1}
+\end{eqnarray}
+Let $\mathbf{K} = (\mathbf{N}^{T} )^{-1} \Omega_N\mathbf{N} ^{-1}$, then we can get
+\begin{equation}
+\mathbf{S}_r = (\mathbf{I} + \lambda \mathbf{K} )^{-1}
+\end{equation}
+
+\section{5.15}
+\subsection{a}
+
+\begin{eqnarray}
+<K(\cdot, x_i), f>_{\mathcal{H}_K} &=& \sum_{i=1}^{\infty} \frac{c_i}{\gamma_i} <K(\cdot, x_i), \phi_i(\cdot)>\\
+&=& \sum_{i=1}^{\infty} \frac{c_i}{\gamma_i} [\gamma_i\phi_i(x_i)]\\
+&=& \sum_{i=1}^{\infty} c_i \phi_i(x_i) \\
+&=& f(x_i)
+\end{eqnarray}
+
+\subsection{b}
+
+\begin{eqnarray}
+<K(\cdot, x_i), K(\cdot, x_j)>_{\mathcal{H}_K} &=& \sum_{k=1}^{\infty} \frac{1}{\gamma_k} <K(\cdot, x_i), K(\cdot, x_j)>\\
+&=& \sum_{k=1}^{\infty} \frac{1}{\gamma_k} [\gamma_k \phi_k(x_i) \gamma_k \phi_k(x_j)]\\
+&=& \sum_{k=1}^{\infty}\gamma_k \phi_k(x_i) \phi_k(x_j)\\
+&=& K(x_i, x_j)
+\end{eqnarray}
+
+\subsection{c}
+\begin{eqnarray}
+J(g) = <g(x), g(x)>_{\mathcal{H}_K} &=& \sum_{i=1}^{N}\sum_{j=1}^{N} <K(x, x_i), K(x, x_j)>_{\mathcal{H}_K} \alpha_i \alpha_j \\
+&=& \sum_{i=1}^{N}\sum_{j=1}^{N} K(x_i, x_j) \alpha_i \alpha_j
+\end{eqnarray}
+
+\subsection{d}
+
+Because $\rho(x)$ is orthogonal in 
+$\mathcal{H}_K$ to each of 
+$K (x, x_i )$ , we can get 
+\begin{equation}
+<K (\cdot, x_i ), \rho(x)>_{\mathcal{H}_K} = 0
+\end{equation}
+and 
+\begin{eqnarray}
+\tilde{g}(x_i) &=& <K(\cdot, x_i), \tilde{g}(x_i)>_{\mathcal{H}_K}\\
+&=& <K(\cdot, x_i), g(x_i)>_{\mathcal{H}_K}+ <K(\cdot, x_i), \rho(x_i)>_{\mathcal{H}_K}\\
+&=& {g}(x_i)
+\end{eqnarray}
+\begin{eqnarray}
+J(\tilde{g}) &=& <\tilde{g}(x), \tilde{g}(x)>_{\mathcal{H}_K}\\
+&=& <{g}(x), g(x)>_{\mathcal{H}_K} + 2<{g}(x), \rho(x)>_{\mathcal{H}_K} + < \rho(x), \rho(x)>_{\mathcal{H}_K}\\
+&=& J(g) + 2 \sum_{i=1}^{N} \alpha_i <K(x, x_i), \rho(x)>_{\mathcal{H}_K} + J(\rho)\\
+&=& J(g) + J(\rho)
+\end{eqnarray} 
+So, we have got 
+\begin{eqnarray}
+\sum_{i=1}^{N} L(y_i, \tilde{g}(x_i)) + \lambda J(\tilde{g}) &=& \sum_{i=1}^{N} L(y_i, {g}(x_i)) + \lambda (J(g) + J(\rho))\\
+&\ge& \sum_{i=1}^{N} L(y_i, {g}(x_i)) + \lambda J(g)
+\end{eqnarray} 
+iff $\rho(x) = 0$, 
+\begin{equation}
+\sum_{i=1}^{N} L(y_i, \tilde{g}(x_i)) + \lambda J(\tilde{g}) = \sum_{i=1}^{N} L(y_i, {g}(x_i)) + \lambda J(g)
+\end{equation}
+
+\section{5.16}
+
+\subsection{a}
+Because 
+\begin{eqnarray}
+K(x,y) &=& \sum_{i=1}^{\infty} \gamma_i \phi_i(x)\\
+&=& \sum_{m=1}^{M} h_m(x)h_m(y) 
+\end{eqnarray}
+Multiply each item with $\phi_k(x)$ and integral w.r.t. $x$, i.e. calculate $<K(x, y), \phi_k(x)>$
+\begin{eqnarray}\label{kk}
+\sum_{m=1}^{M} (\int h_m(x) \phi_k(x)dx) h_m(y) = \sum_{i=1}^{\infty} \gamma_i (\int \phi_i(x) \phi_k(x)dx)\phi_i(y)
+\end{eqnarray}
+Because, 
+\begin{eqnarray}
+\int \phi_i(x) \phi_k(x)dx = <\phi_i(x), \phi_k(x)> &=& \delta (i,k)\\
+&=& \{ \begin{array}{ll}
+ 1 & \textrm{$i = k $}\\
+ 0 & \textrm{else}
+  \end{array}
+\end{eqnarray}
+So equation \ref{kk} can be simplified as 
+\begin{eqnarray}
+\sum_{m=1}^{M} (\int h_m(x) \phi_k(x)dx) h_m(y) = \gamma_k \phi_k(y)
+\end{eqnarray}
+Let $g_{km} = \int h_m(x) \phi_k(x)dx$ and caculate $<\cdot, \phi_l(y)>$, then multiply each item with $\phi_l(y)$ and integral w.r.t. $y$, we can get 
+\begin{eqnarray}
+\label{gkm}
+\sum_{m=1}^{M} g_{km} h_m(y) &=& \gamma_k \phi_k(y)\\
+\sum_{m=1}^{M} g_{km} (\int h_m(y) \phi_l(y)dy) &=& \gamma_k \int \phi_k(y) \phi_l(y)dy\\
+\sum_{m=1}^{M} g_{km} g_{lm} &=& \gamma_k  \delta (k, l)
+\end{eqnarray}
+Let $\mathbf{G_M} = \{g_{nm}\}, n < M $ and every row of $\mathbf{G_M}$ are linear independent, then we can get $\mathbf{G_M}\mathbf{G_M}^T = diag\{\gamma_1, \gamma_2, ... , \gamma_M\} = \mathbf{D_{\gamma}}$\\
+Let $\mathbf{V^T} = \mathbf{D_{\gamma}}^{-\frac{1}{2}} \mathbf{G_M}$, we can get
+\begin{eqnarray}
+\label{vtv}
+(\mathbf{V}^T)^T \mathbf{V}^T  \mathbf{G_M}^T &=& \mathbf{V}\mathbf{V}^T \mathbf{G_M}^T \nonumber \\
+&=& \mathbf{G_M}^T (\mathbf{D_{\gamma}}^{-\frac{1}{2}})^T \mathbf{D_{\gamma}}^{-\frac{1}{2}} \mathbf{G_M} \mathbf{G_M}^T \nonumber\\
+&=& \mathbf{G_M}^T \mathbf{D_{\gamma}}^{-\frac{1}{2}} \mathbf{D_{\gamma}}^{-\frac{1}{2}} \mathbf{D_{\gamma}}\nonumber\\
+&=& \mathbf{G_M}^T
+\end{eqnarray}
+From equation \ref{vtv}, we can get $(\mathbf{V}^T)^T \mathbf{V}^T = (\mathbf{V} \mathbf{V}^T) = \mathbf{E}$, where $\mathbf{V}^T$ is an orthogonal matrix.\\
+Let $h(x) = [h_1(x), h_2(x) ... h_M(x) ]^T$ and $\phi(x) = [\phi_1(x), \phi_2(x) ... \phi_M(x) ]^T$, then the equation \ref{gkm} is eqaul to 
+\begin{eqnarray}
+\mathbf{G_M}h(x) &=& \mathbf{D_{\gamma}} \phi(x)\\
+\mathbf{V} \mathbf{D_{\gamma}}^{-\frac{1}{2}} \mathbf{G_M}h(x) &=& \mathbf{V} \mathbf{D_{\gamma}}^{-\frac{1}{2}} \mathbf{D_{\gamma}} \phi(x) \\
+h(x) &=& \mathbf{V} \mathbf{D_{\gamma}}^{\frac{1}{2}} \phi(x)
+\end{eqnarray}
+And we can get
+\begin{eqnarray}
+5.63 &=& \min_{\{\beta_m\}_1^M} \sum_{i=1}^N (y_i - \sum_{m=1}^M \beta_m h_m(x_i))^2 + \lambda \sum_{m=1}^M \beta_m^2 \\
+&=& \min_\beta \sum_{i=1}^N (y_i - \mathbf{\beta}^T h(x_i))^2 + \lambda \mathbf{\beta}^T\mathbf{\beta} \label{der} \\
+&=& \min_\beta \sum_{i=1}^N (y_i - \mathbf{\beta}^T \mathbf{V} \mathbf{D_{\gamma}}^{\frac{1}{2}} \phi(x_i))^2 + \lambda \mathbf{\beta}
+^T\mathbf{\beta} \\
+&=& \min_{\mathbf{c}} \sum_{i=1}^N (y_i - \mathbf{c}^T \phi(x_i))^2 + \lambda (\mathbf{V} \mathbf{D_{\gamma}}^{-\frac{1}{2} } \mathbf{c})^T (\mathbf{V} \mathbf{D_{\gamma}}^{-\frac{1}{2} } \mathbf{c}) \\
+&=& \min_{\mathbf{c}} \sum_{i=1}^N (y_i - \mathbf{c}^T \phi(x_i))^2 + \lambda \mathbf{c}^T \mathbf{D_{\gamma}}^{-1} \mathbf{c}\\
+&=& \min_{\{c_j\}_1^{\infty} }\sum_{i=1}^N (y_i - \sum_{j=1}^{\infty} {c_j \phi_j(x_i)})^2 + \lambda \sum_{j=1}^{\infty} \frac{c_j^2}{\gamma_j}\\
+&=& 5.53
+\end{eqnarray}
+
+\subsection{b}
+Calculate derivate of \ref{der} w.r.t $\beta$ and let the result equal to 0, we can get 
+\begin{eqnarray}
+-\mathbf{H} (\mathbf{y} -\mathbf{H} \hat{\mathbf{\beta}} ) + \lambda \hat{\mathbf{\beta}} = 0
+\end{eqnarray}
+$\mathbf{K}$ is invertible and for any $\lambda$, $\mathbf{K} + \lambda \mathbf{I} = \mathbf{H}^T \mathbf{H} + \lambda \mathbf{I}$ is invertible.And
+\begin{eqnarray}
+\hat{\mathbf{\beta}} &=& (\mathbf{H}^T \mathbf{H} + \lambda \mathbf{I})^{-1} \mathbf{H}^T \mathbf{y}\\
+\hat{\mathbf{f}} &=&  \mathbf{H}\hat{\mathbf{\beta}}\\
+&=& \mathbf{H} (\mathbf{H}^T \mathbf{H} + \lambda \mathbf{I})^{-1} \mathbf{H}^T \mathbf{y}\\
+&=& (\mathbf{H}^T \mathbf{H}\mathbf{H}^{-1} + \lambda \mathbf{I}\mathbf{H}^{-1})^{-1} \mathbf{H}^T \mathbf{y}\\
+&=& ( (\mathbf{H}^T)^{-1} \mathbf{H}^T \mathbf{H}\mathbf{H}^{-1} + \lambda (\mathbf{H}^T)^{-1} \mathbf{I}\mathbf{H}^{-1})^{-1} \mathbf{y}\\
+&=& (\mathbf{I} +  \lambda \mathbf{K}^{-1} ) \mathbf{y} \\
+&=& \mathbf{K} ( \mathbf{K} + \lambda \mathbf{I} )^{-1} \mathbf{y}
+\end{eqnarray}
+
+\subsection{c}
+From above, we can get
+\begin{eqnarray}
+\hat{\mathbf{f}} &=&  \mathbf{H}\hat{\mathbf{\beta}}\\
+&=& \mathbf{K} \hat{\mathbf{\alpha}}\\
+&=&  \mathbf{K} [\alpha_1, \alpha_2, ..., \alpha_N]^T \\
+\hat{f(x)} &=& h(x)^T \hat{\mathbf{\beta}} = \sum_{i=1}^N K(x, x_i) \hat{\mathbf{\alpha}_i}
+\end{eqnarray}
+
+\subsection{d}
+If $M < N$, $\mathbf{K}$ is not invertible. If $\lambda \ne 0$, $\mathbf{K} + \lambda \mathbf{I}$ is still invertible so solutions above still hold. But if $\lambda = 0$, $\hat{\mathbf{f}} =  \mathbf{H}\hat{\mathbf{\beta}} = \mathbf{H} (\mathbf{H}^T \mathbf{H})^{-1} \mathbf{H}^T \mathbf{y} = \mathbf{y} $
+\end{document}  
