@@ -1,0 +1,111 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+
+\usepackage{indentfirst}
+\usepackage[namelimits]{amsmath} 
+\usepackage{amssymb}             
+\usepackage{amsfonts}            
+\usepackage{mathrsfs}
+
+\usepackage{graphicx}
+
+%\usepackage{graphicx}				% Use pdf, png, jpg, or epsÂ§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+%SetFonts
+
+%SetFonts
+
+
+\begin{document}
+\section{7.3}
+\subsection{1}
+    S arises from least squares projections and cubic smoothing splines, so we can assume
+    \begin{equation}
+        \mathbf{S} = \mathbf{X} (\mathbf{X^T X} + \lambda \Omega)^{-1} \mathbf{X^T} = \mathbf{XA}^{-1} \mathbf{X}^T \nonumber
+    \end{equation}
+    Hence
+    \begin{eqnarray}
+        S_{ii} &=& x_i^T (\mathbf{X^T X} + \lambda \Omega)^{-1} x_i = x_i^T A^{-1} x_i \nonumber \\
+        \hat{f}(x_i) &=& x_i^T (\mathbf{X^T X} + \lambda \Omega)^{-1} \mathbf{X^T y} = x_i^T \mathbf{A}^{-1} \mathbf{X}^T \mathbf{y} \nonumber
+    \end{eqnarray}
+    where $ \mathbf{A} = \mathbf{X}^T \mathbf{X} + \lambda \Omega $
+
+    Denote by $\mathbf{X}_{-i}$ and $\mathbf{y}_{-i}$ the corresponding results with $x_i$ removed, then we have
+    \begin{eqnarray}
+        \hat{f}^{-i}(x_i) &=& x_i^T(\mathbf{X}_{-1}^T \mathbf{X}_{-i} + \lambda \Omega)^{-1} \mathbf{X}_{-i}^T \mathbf{y}_{-i} \nonumber \\
+        &=& x_i^T (\mathbf{X}^T \mathbf{X} - x_i x_i^T + \lambda \Omega)^{-1} (\mathbf{X}^T \mathbf{y} - x_i y_i) \nonumber \\
+        &=& x_i^T ( \mathbf{A} - x_i x_i^T)^{-1}(\mathbf{X}^T \mathbf{y} - x_i y_i) 
+        \label{eq1}
+    \end{eqnarray}
+    (7.64) equals to
+    \begin{equation}
+        \hat{f}^{-i}(x_i) = y_i - \frac{y_i - \hat{f}(x_i)}{1 - S_{ii}} = \frac{\hat{f}(x_i) - y_i S_{ii}}{1 - S_{ii}}
+        \label{eq2}
+    \end{equation}
+    To prove Eq.(\ref{eq1})=Eq.(\ref{eq2}), we should propose a lemma
+    \begin{equation}
+        (\mathbf{A} - xx^T)^{-1} = \mathbf{A}^{-1} + \frac{\mathbf{A}^{-1} xx^T \mathbf{A}^{-1}}{1 - x^T \mathbf{A}^{-1} x}
+    \end{equation}
+    Proof.
+    \begin{eqnarray}
+        (\mathbf{A} - xx^T)(\mathbf{A}^{-1} + \frac{\mathbf{A}^{-1} xx^T \mathbf{A}^{-1}}{1 - x^T \mathbf{A}^{-1} x}) &=& \mathbf{I} + \frac{xx^T \mathbf{A}^{-1}}{1-x^T \mathbf{A}^{-1} x} - xx^T \mathbf{A}^{-1} - \frac{xx^T \mathbf{A}^{-1} xx^T \mathbf{A}^{-1} }{1-x^T \mathbf{A}^{-1} x} \nonumber \\
+        &=& \mathbf{I} + \frac{xx^T \mathbf{A}^{-1} - xx^T \mathbf{A}^{-1} + xx^T\mathbf{A}^{-1} x^T \mathbf{A}^{-1} x - xx^T \mathbf{A}^{-1} xx^T \mathbf{A}^{-1} }{1- x^T \mathbf{A}^{-1} x} \nonumber \\
+        &=& \mathbf{I} + \frac{xx^T \mathbf{A}^{-1} (x^T \mathbf{A}^{-1} x) - x(x^T \mathbf{A}^{-1} x) x^T \mathbf{A}^{-1} }{1- x^T \mathbf{A}^{-1} x} = \mathbf{I} \nonumber
+    \end{eqnarray}
+    Here we can continue deriving Eq.(\ref{eq1})
+    \begin{eqnarray}
+        \hat{f}^{-i}(x_i) &=& x_i^T \left( \mathbf{A}^{-1} + \frac{\mathbf{A}^{-1} x_i x_i^T \mathbf{A}^{-1}}{1 - x_i^T \mathbf{A}^{-1} x_i} \right) (\mathbf{X}^T \mathbf{y} - x_i y_i) \nonumber \\
+        &=& \left( x_i^T \mathbf{A}^{-1} + \frac{S_{ii} x_i^T \mathbf{A}^{-1} }{1 - S_{ii} } \right) (\mathbf{X}^T \mathbf{y} - x_i y_i) \\
+        &=& x_i^T \mathbf{A}^{-1} \mathbf{X}^T \mathbf{y} - x_i^T \mathbf{A}^{-1} x_i y_i + \frac{S_{ii} x_i^T \mathbf{A}^{-1} \mathbf{X}^T \mathbf{y} }{1 - S_{ii}} - \frac{S_{ii} x_i^T \mathbf{A}^{-1} x_i y_i}{1 - S_{ii}} \nonumber \\
+        &=& \hat{f}(x_i) - y_i S_{ii} + \frac{S_{ii} \hat{f}(x_i)}{1 - S_{ii}} - \frac{y_i S_{ii}^2}{1 - S_{ii}} = (\ref{eq2}) \nonumber
+    \end{eqnarray}
+
+\subsection{2}
+
+\noindent
+$(\mathbf{X}^T_{-i}\mathbf{X}_{-i}+\lambda\Omega)^{-1}$ is positive-semidefinite, so we have 
+\begin{equation}
+\begin{split}
+x_i^T(\mathbf{X}^T_{-i}\mathbf{X}_{-i}+\lambda\Omega)^{-1}x_i&=\left( x_i^T\mathbf{A}^{-1}+\frac{S_{ii}x_i^T\mathbf{A}^{-1}}{1-S_{ii}}\right)x_i\quad //from(1)(4) \\
+&= S_{ii}+\frac{S_{ii}^2}{1-S_{ii}}=\frac{S_{ii}}{1-S_{ii}}\ge0 \\
+&\Rightarrow 0\le S_{ii}<1 \\
+y_i-\hat{f}^{-i}(x_i)&=\frac{y_i-\hat{f}(x_i)}{1-S_{ii}} \\
+&\ge y_i-\hat{f}(x_i)
+\end{split}
+\end{equation}
+
+\subsection{3}
+If the recipe for producing $\hat{\mathbf{f}}$ from $\mathbf{y}$ does not depend on $\mathbf{y}$ itself and  $\mathbf{S}$ depends on the  $x_i$ and $\lambda$, we c an just replace $y_i$ with $\hat{f}^{-i}(x_i)$ in $\mathbf{y}$ ($\mathbf{y} \to \mathbf{y}'$) without $\mathbf{S}$ being changed in the second process. Note that $\hat{f}^{-i}(x_i)$ here is calculated by the first process. Here we still have 
+\begin{eqnarray}
+\hat{f}^{-i}(x_i) &=& S_i \mathbf{y'} = \sum_{i \ne j} S_{ij} \mathbf{y}_j'+ S_{ii} \hat{f}^{-i}(x_i) \nonumber \\
+&=& \hat{f}^(x_i) - S_{ii} y_i +  S_{ii} \hat{f}^{-i}(x_i) \nonumber
+\end{eqnarray}
+(7.64) can also be derived from this equation. So the general conditions on any smoother $\mathbf{S}$ to make result (7.64) hold are the recipe for producing $\hat{\mathbf{f}}$ from $\mathbf{y}$ does not depend on $\mathbf{y}$ itself and $\mathbf{S}$ depends only on the $x_i$ and $\lambda$.
+
+\section{7.4}
+Because $Y_0$ and $\mathbf{y}$ have the same distribution, we have $\mathrm{E}_{Y^0}(Y_i^0)=\mathrm{E}_\mathbf{y}(y_i)$ and obviously $\mathrm{E}_{Y^0}[(Y_i^0)^2]=\mathrm{E}_\mathbf{y}(y_i^2)$. Hence
+\begin{equation}
+\begin{split}
+\mathrm{E}_\mathbf{y}(\text{op})=\mathrm{E}_\mathbf{y}(\mathrm{Err}_\mathrm{in}-\bar{\mathrm{err}}) &= \frac{1}{N}\sum_{i=1}^N\mathrm{E}_\mathbf{y}[\mathrm{E}_{Y^0}(Y_i^0-\hat{f}(x_i))^2-(y_i-\hat{f}(x_i))^2] \\
+&= \frac{1}{N}\sum_{i=1}^N\mathrm{E}_\mathbf{y}[\mathrm{E}_{Y^0}(Y_i^0)^2-2\hat{y_i}\mathrm{E}_{Y^0}(Y_i^0)+\hat{y_i}^2-y_i^2+2y_i\hat{y_i}-\hat{y_i}^2] \\
+&= \frac{1}{N}\sum_{i=1}^N[\mathrm{E}_{Y^0}(Y_i^0)^2-2\mathrm{E}_\mathbf{y}(\hat{y_i})\mathrm{E}_{Y^0}(Y_i^0)-\mathrm{E}_\mathbf{y}(y_i^2)+2\mathrm{E}_\mathbf{y}(y_i\hat{y_i})] \\
+&= \frac{1}{N}\sum_{i=1}^N[\mathrm{E}_\mathbf{y}(y_i^2)-2\mathrm{E}_\mathbf{y}(\hat{y_i})\mathrm{E}_\mathbf{y}(y_i)-\mathrm{E}_\mathbf{y}(y_i^2)+2\mathrm{E}_\mathbf{y}(y_i\hat{y_i})] \\
+&= \frac{2}{N}\sum_{i=1}^N[\mathrm{E}_\mathbf{y}(y_i\hat{y_i})-\mathrm{E}_\mathbf{y}(\hat{y_i})\mathrm{E}_\mathbf{y}(y_i)] = \frac{2}{N}\sum_{i=1}^N\mathrm{Cov}(\hat{y_i},y_i)
+\end{split}
+\end{equation}
+
+\section{7.5}
+\begin{eqnarray}
+\sum_{i=1}^N \mathrm{Cov}(\hat{y^i}, y^i) &=& \mathrm{trace} (\mathrm{Cov} (\hat{\mathbf{y}}, \mathbf{y})) \nonumber \\
+&=& \mathrm{trace} (\mathrm{Cov} ( \mathbf{S}\mathbf{y}, \mathbf{y})) \nonumber \\
+&=& \mathrm{trace} ( \mathbf{S}  \mathrm{Cov} (\mathbf{y}, \mathbf{y})) \nonumber \\
+&=& \mathrm{trace} ( \mathbf{S}  \mathrm{Var} (\mathbf{y}, \mathbf{y})) \nonumber \\
+&=& \mathrm{trace} (\mathbf{S}) \sigma_\varepsilon^2 \nonumber
+\end{eqnarray}
+
+\end{document} 

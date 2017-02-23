@@ -1,0 +1,62 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{a4paper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+
+\usepackage{indentfirst}
+\usepackage[namelimits]{amsmath} 
+\usepackage{amssymb}             
+\usepackage{amsfonts}            
+\usepackage{mathrsfs}
+
+\usepackage{graphicx}
+
+%\usepackage{graphicx}				% Use pdf, png, jpg, or epsÂ§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+%SetFonts
+
+%SetFonts
+
+
+\begin{document}
+We define Plus-plane as {$\mathbf{x} : \mathbf{w} . \mathbf{x} + \mathbf{b} = 1 $} and Minius-plane as  {$\mathbf{x} : \mathbf{w} . \mathbf{x} + \mathbf{b} = -1 $}, shown in the following image.\\
+\centerline{\includegraphics[height=0.3\textwidth]{./pic.png} }
+ 
+let $\mathbf{u}$ and $\mathbf{v}$ be two vectors in the Plus-plane, we can get 
+\begin{eqnarray}
+\mathbf{w} . \mathbf{u} + \mathbf{b} &=& 1 \label{left}\\
+\mathbf{w} . \mathbf{v} + \mathbf{b} &=& 1 \label{right}
+\end{eqnarray}  
+and let eq \ref{left} minus eq \ref{right}, i.e.
+\begin{eqnarray}
+( \mathbf{w} . \mathbf{u} + \mathbf{b} ) - ( \mathbf{w} . \mathbf{v} + \mathbf{b} ) &=&  0 \\
+\mathbf{w} . ( \mathbf{u} - \mathbf{v} ) &=&  0 
+\end{eqnarray}  
+which means $\mathbf{w}$ is the perpendicular of the Plus-plane. Similarly, the vector $\mathbf{w}$ is also the perpendicular of the Minus-plane. 
+
+If $\mathbf{x^{+}}$ is any point in the Plus-plane and $\mathbf{x^{-}}$ is the closest point to $\mathbf{x^{+}}$ in the Minus-plane, we can also get 
+\begin{eqnarray}
+\mathbf{w} . \mathbf{x^{+}} + \mathbf{b} &=& 1 \\
+\mathbf{w} . \mathbf{x^{-}} + \mathbf{b} &=& -1 
+\end{eqnarray}
+and $\mathbf{x^{+}} - \mathbf{x^{-}} $ is in the direction of $\mathbf{w}$, which means $\mathbf{x^{+}} - \mathbf{x^{}} = \lambda \mathbf{w}$.
+So we can get
+\begin{eqnarray}
+\mathbf{w} . (\mathbf{x^{-}} + \lambda \mathbf{w}) + \mathbf{b} &=& 1 \\
+\mathbf{w} . \mathbf{x^{-}} + \lambda \mathbf{w} . \mathbf{w} + \mathbf{b} &=& 1 \\
+-1 + \lambda \mathbf{w} . \mathbf{w} &=& 1 \\
+\lambda &=& \frac{2}{\mathbf{w} . \mathbf{w}}
+\end{eqnarray}
+Define Margin width as $M = |\mathbf{x^{+}} - \mathbf{x^{-}}|$. And\\
+\begin{equation}
+M = | \mathbf{x^{+}} - \mathbf{x^{-}}| = |\lambda \mathbf{w}| = \lambda |\mathbf{w}| = \lambda \sqrt{\mathbf{w}.\mathbf{w}} = \frac{2}{\sqrt{\mathbf{w} . \mathbf{w}}}
+\end{equation}
+Let $y_i$ be the label of $x_i$ in our data set. The Maximum Margin problem of the decision boundary can be found by solving the following constrained optimization problem.
+\begin{eqnarray}
+\mathrm{minimum}\,\frac{1}{2} || \mathbf{w} ||^{2}\\
+\mathrm{subject\,to}\ y_i (\mathbf{w} . \mathbf{x}_i + b )&\ge&1
+\end{eqnarray}
+\end{document} 

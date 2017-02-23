@@ -1,0 +1,119 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+
+\usepackage{indentfirst}
+\usepackage[namelimits]{amsmath} 
+\usepackage{amssymb}             
+\usepackage{amsfonts}            
+\usepackage{mathrsfs}
+
+\usepackage{graphicx}
+
+%\usepackage{graphicx}				% Use pdf, png, jpg, or epsÂ§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+%SetFonts
+
+%SetFonts
+
+
+\begin{document}
+
+\section{8.1}
+As we know, $-\log$ is a convex function, so from Jensen`s inequality, we can get
+\begin{eqnarray}
+\mathrm{E}_q[ -\log(r(Y)/q(Y)) ] &\ge& -\log [ \mathrm{E}_q(r(Y)/q(Y)) ]\\
+&=& -\log [\int \frac{r(y)}{q(y)}q(y)dy] \\
+&=& -\log [\int r(y)dy ] \\
+&=& -\log 1 \\
+&=& 0
+\end{eqnarray}
+That means, $\mathrm{E}_q[ \log(r(Y)/q(Y)) ] \le 0 $ iff. $r(y) = q(y)$ it can get its maximum.
+\begin{eqnarray}
+R(\theta', \theta) - R(\theta, \theta) &=& \mathrm{E}[l_1(\theta' ; \mathbf{Z}^m | \mathbf{Z} ) | \mathbf{Z}, \theta ] - \mathrm{E}[l_1(\theta ; \mathbf{Z}^m | \mathbf{Z} ) | \mathbf{Z}, \theta ] \\
+&=& \mathrm{E}_{Pr(\mathbf{Z}^m | \mathbf{Z}, \theta)} [\log Pr ( \mathbf{Z}^m | \mathbf{Z}, \theta' )] - \mathrm{E}_{Pr(\mathbf{Z}^m | \mathbf{Z}, \theta)} [\log Pr ( \mathbf{Z}^m | \mathbf{Z}, \theta )] \\
+&=& \mathrm{E}_{Pr(\mathbf{Z}^m | \mathbf{Z}, \theta)} [\log \frac{Pr ( \mathbf{Z}^m | \mathbf{Z}, \theta' )}{Pr ( \mathbf{Z}^m | \mathbf{Z}, \theta )} ] \\
+&\le& 0 
+\end{eqnarray}
+So, we can get $R(\theta, \theta) \ge R(\theta', \theta)$ and iff. $ Pr ( \mathbf{Z}^m | \mathbf{Z}, \theta' ) = Pr ( \mathbf{Z}^m | \mathbf{Z}, \theta )$, the equation is satisfied
+
+\section{EM for Gaussian mixture model}
+Gaussian mixture model is a linear superposition of Gaussians:
+\begin{equation}
+p(\mathbf{x}) = \sum_{m=1}^M c_m \mathcal{N} (\mathbf{x} | \mathbf{\mu}, \mathbf{\Sigma}) \qquad s.t. \sum_{m=1}^M c_m = 1
+\end{equation}
+In this problem, $M = 3$. And the likelihood is 
+\begin{equation}
+\mathcal{L}(\theta) = \sum_n \log p(x_n | \theta) = \sum_n \log ( \sum_m p(x_n|m, \theta) p(m|\theta) )
+\end{equation}
+where $\theta$ is the parameter set. 
+
+From Jensen's inequality, we can get 
+\begin{eqnarray}
+\log p(\mathbf{X} | \theta) &=& \sum_{n=1}^N \log \sum_{m=1}^M p (x_n, m| \theta) \\
+&=& \sum_{n=1}^N \log \sum_{m=1}^M p(m | x_n, \hat{\theta}) \frac{p (x_n, m| \theta)}{p(m | x_n, \hat{\theta})} \\
+&\ge&  \sum_{n=1}^N \sum_{m=1}^M p(m | x_n, \hat{\theta}) \log \frac{p (x_n, m| \theta)}{p(m | x_n, \hat{\theta})} \label{ge} \\
+&=& \sum_{n=1}^N \mathrm{H} ( p(m | x_n, \hat{\theta}) ) + \mathbf{Q}(\theta; \hat{\theta})
+\end{eqnarray}
+where $\mathrm{H} ( p(m | x_n, \hat{\theta}) )$ is not related to $\theta$ and $ \mathbf{Q}(\theta; \hat{\theta}) = \sum_{n=1}^N \sum_{m=1}^M p(m | x_n, \hat{\theta}) \log p (x_n, m| \theta)$. In the case of GMM, it can be
+\begin{eqnarray}
+\mathbf{Q}(\theta; \hat{\theta}) &=& K + \sum_{n=1}^N \sum_{m=1}^M \gamma_m(n)\log c_m \\
+&-& 1/2 \sum_{n=1}^N \sum_{m=1}^M \gamma_m(n) (\log |\Sigma_m| + (x_n - \mu_m)^T \Sigma_m ^{-1} (x_n - \mu_m))
+\end{eqnarray}
+where $\gamma_m(n) = p( m|x_n, \hat{\theta} )$ is the posterior of $x_n$ belonging to $m$-th Gaussian.  And we know that the inequality \ref{ge} becomes equality when $\theta = \hat{\theta}$. 
+
+It can be easily found that maximum $\mathbf{Q}$ is equal to maximum $\mathcal{L}$. EM algorithm is used to maximum log likelihood of GMM in two steps: 
+
+E-step: calculate $\gamma_m(n)$ to evaluate  $\mathbf{Q} (\theta, \hat{\theta})$, where 
+\begin{equation}
+\gamma_m(n) = p(m|x_n,  \hat{\theta}) = \frac{p(x_n|m, \hat{\theta}) p(m|\hat{\theta})}{\sum_{k=1}^M p(x_n|k, \hat{\theta})p(k|\hat{\theta})}
+\end{equation}
+
+M-step: find $\theta$ which maximizes $\mathbf{Q} (\theta, \hat{\theta})$
+
+When maximizing $\mathbf{Q} (\theta, \hat{\theta})$, we need to derivate each parameters including $\mu_m$, $\Sigma_m$ and $c_m$
+\begin{eqnarray}
+\frac{\partial \mathbf{Q}}{\partial \mu_m} &=& -1/2 \sum_{n=1}^N \gamma_m(n) \Sigma_m^{-1} (x_n - \mu_m)
+\end{eqnarray}
+Let above equation be 0 and we can get
+\begin{eqnarray}
+\sum_{n=1}^N \gamma_m(n)  \mu_m  &=&  \sum_{n=1}^N \gamma_m(n) x_n \\
+\mu_m &=& \frac{\sum_{n=1}^N \gamma_m(n) x_n}{\sum_{n=1}^N \gamma_m(n)}
+\end{eqnarray}
+Similarly, let $\frac{\partial \mathbf{Q}}{\partial \Sigma_m} $ = 0 and we can get
+\begin{eqnarray}
+0 &=& \sum_{n=1}^N \gamma_m(n) [ \Sigma_m^{-1} - \Sigma_m^{-2} (x_n - \mu_m)(x_n - \mu_m)^T ] \\
+ \Sigma_m &=& \frac{\sum_{n=1}^N \gamma_m(n) (x_n - \mu_m)(x_n - \mu_m)^T }{\sum_{n=1}^N \gamma_m(n)}
+\end{eqnarray}
+When calculating $c_m$ because $\sum_{m=1}^M c_m = 1$, we need to use Lagrange multiplier. Let
+\begin{equation}
+\mathbf{T}(c_m) = \sum_{n=1}^N \sum_{m=1}^M \gamma_m(n) \log c_m + \lambda \sum_{m=1}^M c_m
+\end{equation}
+And let $\frac { \partial \mathbf{T} } {\partial c_m} = 0$, we can easily get
+\begin{eqnarray}
+\sum_{n=1}^N \gamma_m(n) \frac{1}{c_m} + \lambda = 0 \\
+\lambda = -\frac{\sum_{n=1}^N \gamma_m(n)}{c_m} \\
+c_m =  -\frac{\sum_{n=1}^N \gamma_m(n)}{\lambda}
+\end{eqnarray}
+Because,
+\begin{equation}
+\sum_{m=1}^M c_m = 1
+\end{equation}
+so we can get
+\begin{eqnarray}
+\sum_{m=1}^M c_m &=& -1/\lambda \sum_{m=1}^M \sum_{n=1}^N \gamma_m(n) = 1 \\
+\lambda &=& \sum_{m=1}^M \sum_{n=1}^N \gamma_m(n)\\
+c_m &=& \frac{ \sum_{n=1}^N \gamma_m(n) }{\sum_{m=1}^M \sum_{n=1}^N \gamma_m(n)}
+\end{eqnarray}
+So, we use the following equations to update:
+\begin{eqnarray}
+\mu_m &=& \frac{\sum_{n=1}^N \gamma_m(n) x_n}{\sum_{n=1}^N \gamma_m(n)} \\
+ \Sigma_m &=& \frac{\sum_{n=1}^N \gamma_m(n) (x_n - \mu_m)(x_n - \mu_m)^T }{\sum_{n=1}^N \gamma_m(n)} \\
+c_m &=& \frac{ \sum_{n=1}^N \gamma_m(n) }{\sum_{m=1}^M \sum_{n=1}^N \gamma_m(n)}
+\end{eqnarray}
+
+\end{document} 
