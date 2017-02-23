@@ -1,0 +1,96 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or epsÂ§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+%SetFonts
+
+%SetFonts
+
+
+\begin{document}
+\section{6.2}
+%\subsection{}
+By the definition of vector-valued function, $b(x)^T = (1, x)$ and $\mathbf{B} = [\mathbf{1}, \mathbf{x}]$, so we can get
+\begin{eqnarray}
+b(x_0)^T &=& b(x_0)^T (\mathbf{B}^T \mathbf{W}(x_0) \mathbf{B})^{-1} \mathbf{B}^T \mathbf{W}(x_0) \mathbf{B}\\
+(1, x_0) &=& b(x_0)^T (\mathbf{B}^T \mathbf{W}(x_0) \mathbf{B})^{-1} \mathbf{B}^T \mathbf{W}(x_0) [\mathbf{1}, \mathbf{x}]
+\end{eqnarray}
+That means
+\begin{eqnarray}
+1 &=& b(x_0)^T (\mathbf{B}^T \mathbf{W}(x_0) \mathbf{B})^{-1} \mathbf{B}^T \mathbf{W}(x_0) \mathbf{1} \nonumber \\
+&=& \sum_{i = 1}^N l_i(x_0) \label{eq1} 
+\end{eqnarray}
+and
+\begin{eqnarray}
+x_0 &=& b(x_0)^T (\mathbf{B}^T \mathbf{W}(x_0) \mathbf{B})^{-1} \mathbf{B}^T \mathbf{W}(x_0) \mathbf{x} \nonumber \\
+&=& \sum_{i = 1}^N l_i(x_0)x_i  \label{eq2} 
+\end{eqnarray}
+\begin{eqnarray}
+\sum_{i = 1}^N (x_i - x_0) l_i(x_0) &=& \sum_{i = 1}^N l_i(x_0)x_i - x_o \sum_{i = 1}^N l_i(x_0) \nonumber \\
+&=& x_0 - x_0 \cdot 1\\
+&=& 0
+\end{eqnarray}
+From equation \ref{eq1}, we can get
+\begin{eqnarray}
+b(x_0) = \sum_{i = 1}^N (x_i - x_0)^0 l_i(x_0) = \sum_{i = 1}^N l_i(x_0) = 1
+\end{eqnarray}
+When $j \in \{2,...,k\}$, we can get vector-valued function $b(x)^T = (1,x,x^2,...,x^k)$ and $ \mathbf{B} = [ \mathbf{1}, \mathbf{x}, \mathbf{x^2},..., \mathbf{x^k}]$. 
+From equation \ref{eq2}, we can get
+\begin{eqnarray}
+x_0^j = \sum_{i = 1}^N l_i(x_0) x_i^j
+\end{eqnarray}
+Expanding $(x_i - x_0)^j$, each term can be written as $(-1)^b x_i^a x_0^b$, where $a + b = j$. And, it is obvious that the number of positive terms is equal to the negative one, i.e. $\sum_{n=1}^{2^j} (-1)^{b_n} = 0$. So each term of $b_j(x_0)$ can be written as
+\begin{eqnarray}
+\sum_{i = 1}^N (-1)^b x_i^a x_0^b l_i(x_0) &=& (-1)^b x_0^b \sum_{i = 1}^N l_i(x_0) x_i^a\\
+&=& (-1)^b x_0^b x_0^a\\
+&=& (-1)^b x_0^j\\
+b_j(x_0) &=& \sum_{i = 1}^N (x_i - x_0)^j l_i(x_0)\\
+&=& \sum_{n = 1}^{2^j} \sum_{i = 1}^N (-1)^{b_n} x_i^{j - b_n} x_0^{b_n} l_i(x_0) \\
+&=& \sum_{n = 1}^{2^j} [ (-1)^{b_n} x_0^j]\\
+&=& 0
+\end{eqnarray}
+So, we have the bias
+\begin{eqnarray}
+\mathbb{E}[\hat{f}(x_0) - f(x_0)] &=& \sum_{i = 1}^N l_i(x_0)f(x_i) - f(x_0)\\
+&=& [f(x_0) \sum_{i = 1}^N l_i(x_0) - f(x_0)] + f^{'}(x_0) \sum_{i = 1}^N (x_i - x_0) l_i(x_0) \nonumber \\
+&& + k_2 f^{''}(x_0) \sum_{i = 1}^N (x_i - x_0)^2 l_i(x_0) + ... \nonumber \\
+&& + k_{j+1} f^{(j+1)}(x_0) \sum_{i = 1}^N (x_i - x_0)^{(j+1)} l_i(x_0) + ... \\
+&=& k_{j+1} f^{(j+1)}(x_0) \sum_{i = 1}^N (x_i - x_0)^{(j+1)} l_i(x_0) + ...
+\end{eqnarray}
+where $k_n$ is the coefficient of series expansion terms. Now, we can get that the bias depends only on $j+1$th degree and higher order terms in the expansion of $f$.
+
+\section{6.3}
+$\mathbf{B}$ is a $N * 2$ regression matrix, which is not invertible, while $\mathbf{B}\mathbf{B}^T$ is invertible. Because,
+\begin{eqnarray}
+\hat{f}(x_j) &=& b(x_j)^T (\mathbf{B}^T \mathbf{W}(x_j)\mathbf{B})^{-1} \mathbf{B}^T \mathbf{W}(x_j)\mathbf{y}\\
+&=&  \sum_{i = 1}^N l_i(x_j)y_i\\
+&=& {l}(x_j)^T\mathbf{y}
+\end{eqnarray}
+We can get
+\begin{eqnarray}
+{l}(x_j)^T &=& b(x_j)^T (\mathbf{B}^T \mathbf{W}(x_j)\mathbf{B})^{-1} \mathbf{B}^T \mathbf{W}(x_j)\\
+{l}(x_j) &=& \mathbf{W}(x_j) \mathbf{B} (\mathbf{B}^T \mathbf{W}(x_j)\mathbf{B})^{-1} b(x_j)
+\end{eqnarray}
+So, 
+\begin{eqnarray}
+||l(x_j)||^2 &=& {l}(x_j)^T {l}(x_j)\\
+&=& [b(x_j)^T (\mathbf{B}^T \mathbf{W}(x_j)\mathbf{B})^{-1} \mathbf{B}^T \mathbf{W}(x_j)][\mathbf{W}(x_j) \mathbf{B} (\mathbf{B}^T \mathbf{W}(x_j)\mathbf{B})^{-1} b(x_j)]\\
+&=& [b(x_j)^T (\mathbf{B}^T \mathbf{W}(x_j)\mathbf{B})^{-1} \mathbf{B}^T \mathbf{W}(x_j)][(\mathbf{B}\mathbf{B}^T) (\mathbf{B}\mathbf{B}^T)^{-1} (\mathbf{B}\mathbf{B}^T)^{-1} (\mathbf{B}\mathbf{B}^T)]\\
+&& [\mathbf{W}(x_j) \mathbf{B} (\mathbf{B}^T \mathbf{W}(x_j)\mathbf{B})^{-1} b(x_j)] \nonumber \\
+&=& b(x_j)^T \mathbf{B}^T (\mathbf{B}\mathbf{B}^T)^{-1} (\mathbf{B}\mathbf{B}^T)^{-1} \mathbf{B} b(x_j)
+\end{eqnarray}
+So,
+\begin{eqnarray}
+||l(x)||^2 &=& \sum_{j = 1}^{d+1} ||l(x_j)||^2\\
+&=& \sum_{j = 1}^{d+1}  b(x_j)^T \mathbf{B}^T (\mathbf{B}\mathbf{B}^T)^{-1} (\mathbf{B}\mathbf{B}^T)^{-1} \mathbf{B} b(x_j)\\
+&=& \mathrm{trace} (\mathbf{B}\mathbf{B}^T(\mathbf{B}\mathbf{B}^T)^{-1}(\mathbf{B}\mathbf{B}^T)^{-1}(\mathbf{B}\mathbf{B}^T))\\
+&=& \mathrm{trace} (\mathbf{I}_{d+1})\\
+&=& d+1
+\end{eqnarray}
+Hence $||l(x+1)|| = \sqrt{d+1}$ which increases with the degree of the local polynomial. 
+\end{document} \sum_{i = 1}^N 
